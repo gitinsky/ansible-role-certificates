@@ -1,0 +1,12 @@
+---
+- set_fact:
+    key_name: localCA
+
+- include: makeServerKey.yml
+
+- name: localCA.cnf
+  template: src=cert_name.cnf.yml
+            dest=/etc/pki/tls/certs/{{ key_name }}.cnf
+
+- name: makeLocalCA
+  command: openssl req -new -x509 -days 1825 -config "/etc/pki/tls/certs/localCA.cnf" -key "/etc/pki/tls/private/localCA.key" -out "/etc/pki/tls/certs/localCA.crt"

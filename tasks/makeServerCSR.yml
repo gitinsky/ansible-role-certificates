@@ -1,0 +1,12 @@
+---
+- set_fact:
+    key_name: "{{ ssl_name }}"
+
+- name: ssl_name.cnf
+  template: src=cert_name.cnf.yml
+            dest=/etc/pki/tls/certs/{{ key_name }}.cnf
+
+- include: makeServerKey.yml
+
+- name: makeServerCSR
+  command: openssl req -new -config "/etc/pki/tls/certs/{{ ssl_name }}.cnf" -key "/etc/pki/tls/private/{{ ssl_name }}.key" -out "/etc/pki/tls/certs/{{ ssl_name }}.csr"

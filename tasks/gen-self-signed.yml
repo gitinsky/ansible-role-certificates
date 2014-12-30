@@ -1,0 +1,43 @@
+---
+- name: create app /etc/pki/tls subdirectories
+  file: dest={{ item }}
+        state=directory
+        recurse=yes
+  with_items:
+      - /etc/pki/tls/private
+      - /etc/pki/tls/certs/
+      
+# makeServerKey
+- set_fact:
+    key_name: "{{ ssl_name }}"
+
+- name: ssl_name.cnf
+  template: src=cert_name.cnf.yml
+            dest=/etc/pki/tls/certs/{{ key_name }}.cnf
+
+- include: makeServerKey.yml
+
+
+
+# server csr
+- stat: path=/etc/pki/tls/certs/{{ ssl_name }}.csr
+  register: serverCSR
+
+- include: makeServerCSR.yml
+  when: serverCSR.stat.exists == False
+
+
+# makeLocalCA
+- stat: path=/etc/pki/tls/certs/localCA.crt
+  register: localCA
+
+- include: makeLocalCA.yml
+  when: localCA.stat.exists == False
+
+- name: makeSelfSigned
+  command: >
+    openssl x509 -req  -CAcreateserial -days 3650 \
+    -in    "/etc/pki/tls/certs/{{ ssl_name }}.csr" \
+    -out   "/etc/pki/tls/certs/{{ ssl_name }}.crt" \
+    -CA    "/etc/pki/tls/certs/localCA.crt" \
+    -CAkey "/etc/pki/tls/private/localCA.key"

@@ -1,0 +1,7 @@
+---
+- stat: path=/etc/pki/tls/certs/{{ ssl_name }}.crt
+  register: ssl_cert
+
+- include: gen-self-signed.yml
+  when: ssl_cert.stat.exists == False
+

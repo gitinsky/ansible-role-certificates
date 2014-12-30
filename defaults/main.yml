@@ -1,0 +1,8 @@
+---
+ssl_name: "{{ ansible_fqdn }}"
+ssl_commonName: "{{ ansible_fqdn }}"
+ssl_countryName: RU
+ssl_stateOrProvinceName: St-Petersburg
+ssl_localityName: St-Petersburg
+ssl_organizationName: "{{ ansible_fqdn }}"
+ssl_organizationUnit: IT
