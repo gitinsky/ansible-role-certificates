@@ -1,5 +1,5 @@
 ---
-- stat: path=/etc/pki/tls/certs/{{ ssl_name }}.crt
+- stat: path={{ ssl_cert_root }}/certs/{{ ssl_name }}.crt
   register: ssl_cert
 
 - include: gen-self-signed.yml
