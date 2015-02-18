@@ -5,3 +5,7 @@
 - include: gen-self-signed.yml
   when: ssl_cert.stat.exists == False
 
+- name: trust local ca
+  file: state=link src={{ ssl_cert_root }}/certs/localCA.crt dest=/usr/local/share/ca-certificates/localCA.crt
+  notify: update-ca-certificates
+  when: ssl_trust_local_ca
