@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['ANSIBLE_ROLES_PATH'] = "../../../roles"
+
+Vagrant.configure(2) do |config|
+
+  config.vm.define "certs_12" do |certs_12_cfg|
+    certs_12_cfg.vm.box='ubuntu/precise64'
+    certs_12_cfg.vm.provider :virtualbox do |v|
+      v.name = "certs_12"
+      # v.memory = 512
+    end
+  end
+  
+  config.vm.define "certs_14" do |certs_14_cfg|
+    certs_14_cfg.vm.box='ubuntu/trusty64'
+    certs_14_cfg.vm.provider :virtualbox do |v|
+      v.name = "certs_14"
+      # v.memory = 512
+    end
+  end
+  
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "certs.yml"
+    # ansible.verbose = "vvv"
+    ansible.sudo = true
+    # ansible.tags = ['debug']
+    ansible.groups = {
+      "certs" => ["certs_12", "certs_14"],
+    }
+    ansible.extra_vars = {
+      certificates_array:
+      [
+        { ssl_name: 'test1.example.com', },
+        { ssl_name: 'test2.example.com', ssl_cert_root: '/etc/pki/tls', ssl_trust_local_ca: 'true', },
+      ]
+    }
+  end
+end

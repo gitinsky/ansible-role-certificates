@@ -1,0 +1,5 @@
+---
+ssl_cert_root: /etc/ssl
+certificates_array:
+    - { ssl_name: test1.example.com }
+    - { ssl_name: test2.example.com, ssl_cert_root: /etc/pki/tls, ssl_trust_local_ca: true }

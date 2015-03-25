@@ -1,0 +1,41 @@
+---
+# 1. save current variables
+- set_fact:
+     global_ssl_name:                "{{ ssl_name }}"
+     global_ssl_commonName:          "{{ ssl_commonName }}"
+     global_ssl_countryName:         "{{ ssl_countryName }}"
+     global_ssl_stateOrProvinceName: "{{ ssl_stateOrProvinceName }}"
+     global_ssl_localityName:        "{{ ssl_localityName }}"
+     global_ssl_organizationName:    "{{ ssl_organizationName }}"
+     global_ssl_organizationUnit:    "{{ ssl_organizationUnit }}"
+     global_ssl_cert_root:           "{{ ssl_cert_root }}"
+     global_ssl_trust_local_ca:      "{{ ssl_trust_local_ca }}"
+
+# 2. run singlecert.yml
+
+- debug: var=certificates_array
+
+# waiting for 2.0 release...
+- include: singlecert.yml
+           ssl_name="{{ item.ssl_name|default(global_ssl_name) }}"
+           ssl_commonName="{{ item.ssl_commonName|default(global_ssl_commonName) }}"
+           ssl_countryName="{{ item.ssl_countryName|default(global_ssl_countryName) }}"
+           ssl_stateOrProvinceName="{{ item.ssl_stateOrProvinceName|default(global_ssl_stateOrProvinceName) }}"
+           ssl_localityName="{{ item.ssl_localityName|default(global_ssl_localityName) }}"
+           ssl_organizationName="{{ item.ssl_organizationName|default(global_ssl_organizationName) }}"
+           ssl_organizationUnit="{{ item.ssl_organizationUnit|default(global_ssl_organizationUnit) }}"
+           ssl_cert_root="{{ item.ssl_cert_root|default(global_ssl_cert_root) }}"
+           ssl_trust_local_ca="{{ item.ssl_trust_local_ca|default(global_ssl_trust_local_ca) }}"
+  with_items: certificates_array
+
+# 3. restore values
+- set_fact:
+     ssl_name:                "{{ global_ssl_name }}"
+     ssl_commonName:          "{{ global_ssl_commonName }}"
+     ssl_countryName:         "{{ global_ssl_countryName }}"
+     ssl_stateOrProvinceName: "{{ global_ssl_stateOrProvinceName }}"
+     ssl_localityName:        "{{ global_ssl_localityName }}"
+     ssl_organizationName:    "{{ global_ssl_organizationName }}"
+     ssl_organizationUnit:    "{{ global_ssl_organizationUnit }}"
+     ssl_cert_root:           "{{ global_ssl_cert_root }}"
+     ssl_trust_local_ca:      "{{ global_ssl_trust_local_ca }}"

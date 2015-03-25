@@ -1,0 +1,4 @@
+- hosts: certs
+  sudo: yes
+  roles:
+    - { role: certificates, ssl_cert_root: /etc/ssl, ssl_name: test1.example.com } 

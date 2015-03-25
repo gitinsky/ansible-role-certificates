@@ -1,0 +1,4 @@
+- hosts: certs
+  sudo: yes
+  roles:
+    - { role: certificates } 
