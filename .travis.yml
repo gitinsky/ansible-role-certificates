@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+  - 1.9.3
+install:
+  - sudo wget -nv https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.2_x86_64.deb
+  - sudo dpkg -i vagrant_1.7.2_x86_64.deb
+  - curl https://www.virtualbox.org/download/oracle_vbox.asc | sudo apt-key add -
+  - echo "deb http://download.virtualbox.org/virtualbox/debian/ precise contrib" | sudo tee -a /etc/apt/sources.list
+  - sudo apt-get update -qq
+  - sudo apt-get install virtualbox-4.3 dkms python
+before_script:
+  - ls
+script:
+  - vagrant up
+
