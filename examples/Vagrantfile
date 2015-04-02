@@ -7,6 +7,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "certs_12" do |certs_12_cfg|
     certs_12_cfg.vm.box='ubuntu/precise64'
+    certs_12_cfg.vm.network "private_network", ip: "192.168.33.12", name: "vboxnet1", adapter:2
     certs_12_cfg.vm.provider :virtualbox do |v|
       v.name = "certs_12"
       # v.memory = 512
@@ -15,6 +16,7 @@ Vagrant.configure(2) do |config|
   
   config.vm.define "certs_14" do |certs_14_cfg|
     certs_14_cfg.vm.box='ubuntu/trusty64'
+    certs_12_cfg.vm.network "private_network", ip: "192.168.33.14", name: "vboxnet1", adapter:2
     certs_14_cfg.vm.provider :virtualbox do |v|
       v.name = "certs_14"
       # v.memory = 512
