@@ -6,7 +6,7 @@
 - name: touch dhparams.pem or fix permissions
   file: path={{ ssl_cert_root }}/certs/dhparams.pem
         state=touch
-        owner=root
+        owner={{ ansible_env.USER }}
         mode=600
   when: dhparams_file.stat.exists == False
 
