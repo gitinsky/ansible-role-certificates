@@ -9,3 +9,4 @@ ssl_organizationUnit: IT
 
 ssl_cert_root: /etc/pki/tls
 ssl_trust_local_ca: false
+ssl_no_dhparams: no

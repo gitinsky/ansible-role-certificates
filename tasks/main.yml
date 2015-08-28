@@ -9,3 +9,6 @@
   file: state=link src={{ ssl_cert_root }}/certs/localCA.crt dest=/usr/local/share/ca-certificates/localCA.crt
   notify: update-ca-certificates
   when: ssl_trust_local_ca
+
+- include: hdparams.yml
+  when: ssl_no_dhparams == False

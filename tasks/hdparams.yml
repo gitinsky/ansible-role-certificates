@@ -1,0 +1,15 @@
+---
+- name: check if dhparams.pem exists
+  stat: path={{ ssl_cert_root }}/certs/dhparams.pem
+  register: dhparams_file
+
+- name: touch dhparams.pem or fix permissions
+  file: path={{ ssl_cert_root }}/certs/dhparams.pem
+        state=touch
+        owner=root
+        mode=600
+  when: dhparams_file.stat.exists == False
+
+- name: generate dhparams.pem
+  command: openssl dhparam -out {{ ssl_cert_root }}/certs/dhparams.pem 2048
+  when: dhparams_file.stat.exists == False

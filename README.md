@@ -33,3 +33,6 @@ playbook:
   roles:
     - { role: certificates, ssl_cert_root: ./, ssl_name: me.not }
 ```
+
+
+Enable ```ssl_no_dhparams``` to avoid {{ ssl_cert_root }}/certs/dhparams.pem generation
