@@ -34,5 +34,9 @@ playbook:
     - { role: certificates, ssl_cert_root: ./, ssl_name: me.not }
 ```
 
-
+### dhparams
 Enable ```ssl_no_dhparams``` to avoid {{ ssl_cert_root }}/certs/dhparams.pem generation
+
+### ssl_cert_root
+
+Usually ```/etc/pki/tls```or ```/etc/ssl```.

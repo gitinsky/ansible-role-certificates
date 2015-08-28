@@ -7,6 +7,6 @@ ssl_localityName: St-Petersburg
 ssl_organizationName: "{{ ansible_fqdn }}"
 ssl_organizationUnit: IT
 
-ssl_cert_root: /etc/pki/tls
+ssl_cert_root: /etc/ssl
 ssl_trust_local_ca: false
 ssl_no_dhparams: no
