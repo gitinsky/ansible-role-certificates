@@ -17,3 +17,19 @@ curl http://www.startssl.com/certs/sub.class1.server.ca.pem | tee -a /etc/pki/tl
 curl http://www.startssl.com/certs/ca.pem                   | tee -a /etc/pki/tls/certs/yourdomain.com.crt
 
 ```
+
+### Local certificate generation
+
+Hosts:
+
+```yml
+localhost  ansible_connection=local
+```
+
+playbook:
+
+```yml
+- hosts: localhost
+  roles:
+    - { role: certificates, ssl_cert_root: ./, ssl_name: me.not }
+```
