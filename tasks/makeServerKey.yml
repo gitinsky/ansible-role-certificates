@@ -1,15 +1,15 @@
 ---
 - name: check if root key exists
-  stat: path={{ ssl_cert_root }}/private/{{ key_name }}.key
+  stat: path={{ ssl_cert_private_dir }}/{{ key_file_name }}.key
   register: ssl_key_file
 
 - name: touch root cert or fix permissions ( tets owner to ansible_env.USER, ensure to run as root ( sudo ) when required )
-  file: path={{ ssl_cert_root }}/private/{{ key_name }}.key
+  file: path={{ ssl_cert_private_dir }}/{{ key_file_name }}.key
         state=touch
         owner={{ ansible_env.USER }}
         mode=600
   when: ssl_key_file.stat.exists == False
 
 - name: makeServerKey
-  command: openssl genrsa -out {{ ssl_cert_root }}/private/{{ key_name }}.key 4096
+  command: openssl genrsa -out {{ ssl_cert_private_dir }}/{{ key_file_name }}.key 4096
   when: ssl_key_file.stat.exists == False

@@ -1,12 +1,12 @@
 ---
-- stat: path={{ ssl_cert_root }}/certs/{{ ssl_name }}.crt
+- stat: path={{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.crt
   register: ssl_cert
 
 - include: gen-self-signed.yml
   when: ssl_cert.stat.exists == False
 
 - name: trust local ca
-  file: state=link src={{ ssl_cert_root }}/certs/localCA.crt dest=/usr/local/share/ca-certificates/localCA.crt
+  file: state=link src={{ ssl_cert_certs_dir }}/localCA.crt dest=/usr/local/share/ca-certificates/localCA.crt
   notify: update-ca-certificates
   when: ssl_trust_local_ca
 

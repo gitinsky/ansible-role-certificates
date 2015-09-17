@@ -4,31 +4,29 @@
         state=directory
         recurse=yes
   with_items:
-      - "{{ ssl_cert_root }}/private"
-      - "{{ ssl_cert_root }}/certs/"
-      
+      - "{{ ssl_cert_private_dir }}"
+      - "{{ ssl_cert_certs_dir }}"
+
 # makeServerKey
 - set_fact:
     key_name: "{{ ssl_name }}"
-
+    key_file_name: "{{ ssl_cert_filename }}"
+    
 - name: ssl_name.cnf
   template: src=cert_name.cnf.yml
-            dest={{ ssl_cert_root }}/certs/{{ key_name }}.cnf
+            dest={{ ssl_cert_certs_dir }}/{{ key_file_name }}.cnf
 
 - include: makeServerKey.yml
 
-
-
 # server csr
-- stat: path={{ ssl_cert_root }}/certs/{{ ssl_name }}.csr
+- stat: path={{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.csr
   register: serverCSR
 
 - include: makeServerCSR.yml
   when: serverCSR.stat.exists == False
 
-
 # makeLocalCA
-- stat: path={{ ssl_cert_root }}/certs/localCA.crt
+- stat: path={{ ssl_cert_certs_dir }}/localCA.crt
   register: localCA
 
 - include: makeLocalCA.yml
@@ -37,7 +35,7 @@
 - name: makeSelfSigned
   command: >
     openssl x509 -req  -CAcreateserial -days 3650 \
-    -in    "{{ ssl_cert_root }}/certs/{{ ssl_name }}.csr" \
-    -out   "{{ ssl_cert_root }}/certs/{{ ssl_name }}.crt" \
-    -CA    "{{ ssl_cert_root }}/certs/localCA.crt" \
-    -CAkey "{{ ssl_cert_root }}/private/localCA.key"
+    -in    "{{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.csr" \
+    -out   "{{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.crt" \
+    -CA    "{{ ssl_cert_certs_dir }}/localCA.crt" \
+    -CAkey "{{ ssl_cert_private_dir }}/localCA.key"

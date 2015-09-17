@@ -1,15 +1,15 @@
 ---
 - name: check if dhparams.pem exists
-  stat: path={{ ssl_cert_root }}/certs/dhparams.pem
+  stat: path={{ ssl_cert_certs_dir }}/dhparams.pem
   register: dhparams_file
 
 - name: touch dhparams.pem or fix permissions
-  file: path={{ ssl_cert_root }}/certs/dhparams.pem
+  file: path={{ ssl_cert_certs_dir }}/dhparams.pem
         state=touch
         owner={{ ansible_env.USER }}
         mode=600
   when: dhparams_file.stat.exists == False
 
 - name: generate dhparams.pem
-  command: openssl dhparam -out {{ ssl_cert_root }}/certs/dhparams.pem 2048
+  command: openssl dhparam -out {{ ssl_cert_certs_dir }}/dhparams.pem 2048
   when: dhparams_file.stat.exists == False

@@ -8,5 +8,10 @@ ssl_organizationName: "{{ ansible_fqdn }}"
 ssl_organizationUnit: IT
 
 ssl_cert_root: /etc/ssl
+ssl_cert_private_dir: "{{ ssl_cert_root }}/private"
+ssl_cert_certs_dir: "{{ ssl_cert_root }}/certs"
+
+ssl_cert_filename: "{{ ssl_name }}"
+
 ssl_trust_local_ca: false
 ssl_no_dhparams: no
