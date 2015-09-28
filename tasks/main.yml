@@ -1,4 +1,10 @@
 ---
+- stat: path={{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.csr
+  register: ssl_csr
+
+- include: create_csr.yml
+  when: ssl_csr.stat.exists == False
+
 - stat: path={{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.crt
   register: ssl_cert
 
