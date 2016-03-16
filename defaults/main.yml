@@ -15,3 +15,5 @@ ssl_cert_filename: "{{ ssl_name }}"
 
 ssl_trust_local_ca: false
 ssl_no_dhparams: no
+
+ssl_key_bytes: 4096

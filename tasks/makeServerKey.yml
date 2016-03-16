@@ -11,5 +11,5 @@
   when: ssl_key_file.stat.exists == False
 
 - name: makeServerKey
-  command: openssl genrsa -out {{ ssl_cert_private_dir }}/{{ key_file_name }}.key 4096
+  command: openssl genrsa -out {{ ssl_cert_private_dir }}/{{ key_file_name }}.key {{ ssl_key_bytes }}
   when: ssl_key_file.stat.exists == False
