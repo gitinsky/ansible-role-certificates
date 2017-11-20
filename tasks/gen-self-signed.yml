@@ -3,7 +3,7 @@
 - stat: path={{ ssl_cert_certs_dir }}/localCA.crt
   register: localCA
 
-- include: makeLocalCA.yml
+- include_tasks: makeLocalCA.yml
   when: localCA.stat.exists == False
 
 - name: makeSelfSigned

@@ -2,13 +2,13 @@
 - stat: path={{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.csr
   register: ssl_csr
 
-- include: create_csr.yml
+- include_tasks: create_csr.yml
   when: ssl_csr.stat.exists == False
 
 - stat: path={{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.crt
   register: ssl_cert
 
-- include: gen-self-signed.yml
+- include_tasks: gen-self-signed.yml
   when: ssl_cert.stat.exists == False
 
 - name: trust local ca
@@ -16,5 +16,5 @@
   notify: update-ca-certificates
   when: ssl_trust_local_ca
 
-- include: hdparams.yml
+- include_tasks: hdparams.yml
   when: ssl_no_dhparams == False

@@ -15,11 +15,11 @@
   template: src=cert_name.cnf.yml
             dest={{ ssl_cert_certs_dir }}/{{ key_file_name }}.cnf
 
-- include: makeServerKey.yml
+- include_tasks: makeServerKey.yml
 
 # server csr
 - stat: path={{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.csr
   register: serverCSR
 
-- include: makeServerCSR.yml
+- include_tasks: makeServerCSR.yml
   when: serverCSR.stat.exists == False

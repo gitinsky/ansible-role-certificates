@@ -3,7 +3,7 @@
     key_name: localCA
     key_file_name: localCA
 
-- include: makeServerKey.yml
+- include_tasks: makeServerKey.yml
 
 - name: localCA.cnf
   template: src=cert_name.cnf.yml

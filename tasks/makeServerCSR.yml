@@ -7,7 +7,7 @@
   template: src=cert_name.cnf.yml
             dest={{ ssl_cert_certs_dir }}/{{ key_file_name }}.cnf
 
-- include: makeServerKey.yml
+- include_tasks: makeServerKey.yml
 
 - name: makeServerCSR
   command: openssl req -new -config "{{ ssl_cert_certs_dir }}/{{ key_file_name }}.cnf" -key "{{ ssl_cert_private_dir }}/{{ key_file_name }}.key" -out "{{ ssl_cert_certs_dir }}/{{ ssl_cert_filename }}.csr"
